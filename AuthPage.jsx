@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { auth, db } from "../config.js";
-import { C } from "../constants.js";
-import { fieldStyle, Lbl, BtnPrimary, Logo } from "../UI.jsx";
+import { auth, db } from "./config.js";
+import { C } from "./constants.js";
+import { fieldStyle, Lbl, BtnPrimary, Logo } from "./UI.jsx";
 
 export default function AuthPage({onAuth}) {
   const [mode,     setMode]     = useState("login"); // login | register
