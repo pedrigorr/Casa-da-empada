@@ -3,7 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "./firebase/config.js";
 import { C } from "./utils/constants.js";
-import { Logo, Spinner } from "./components/UI.jsx";
+import { Logo, Spinner } from "./UI.jsx";
 import AuthPage from "./AuthPage.jsx";
 import AdminLayout from "./AdminLayout.jsx";
 import DriverDashboard from "./DriverDashboard.jsx";
