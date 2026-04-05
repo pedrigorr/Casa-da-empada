@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { C, fmt, fmtDt, isDone, PAYMENT_METHODS } from "../utils/constants.js";
-import { Card, StatCard, Modal, WaButton } from "../components/UI.jsx";
+import { C, fmt, fmtDt, isDone, PAYMENT_METHODS } from "./constants.js";
+import { Card, StatCard, Modal, WaButton } from "./UI.jsx";
 
 function WaModal({message, onClose}) {
   const [number,setNumber]=useState("");
