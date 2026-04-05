@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { signOut } from "firebase/auth";
 import { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, setDoc, getDoc } from "firebase/firestore";
-import { auth, db } from "../config.js";
-import { C, WHATSAPP_ADMIN, fmt, fmtDt, isDone, ORDER_STATUS, PAYMENT_METHODS, MENU, ALL_ITEMS, CIDADES } from "../constants.js";
-import { Toast, Spinner, Modal, Pill, SBadge, Card, StatCard, fieldStyle, Lbl, BtnPrimary, WaButton, Logo } from "../UI.jsx";
+import { auth, db } from "./config.js";
+import { C, WHATSAPP_ADMIN, fmt, fmtDt, isDone, ORDER_STATUS, PAYMENT_METHODS, MENU, ALL_ITEMS, CIDADES } from "./constants.js";
+import { Toast, Spinner, Modal, Pill, SBadge, Card, StatCard, fieldStyle, Lbl, BtnPrimary, WaButton, Logo } from "./UI.jsx";
 import NovoPedido from "./NovoPedido.jsx";
 import ClientesPage from "./ClientesPage.jsx";
 import AnalisePage from "./AnalisePage.jsx";
