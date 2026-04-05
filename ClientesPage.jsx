@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
-import { db } from "../firebase/config.js";
-import { C, fmt, fmtDt } from "../utils/constants.js";
-import { Card, fieldStyle, Lbl, BtnPrimary, WaButton, Modal } from "../components/UI.jsx";
+import { db } from "./config.js";
+import { C, fmt, fmtDt } from "./constants.js";
+import { Card, fieldStyle, Lbl, BtnPrimary, WaButton, Modal } from "./UI.jsx";
 
 const AVATARS = ["👤","👨","👩","🧔","👱","🧑","👴","👵","🧒","👶"];
 
