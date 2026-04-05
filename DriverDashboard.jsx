@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { signOut } from "firebase/auth";
 import { collection, onSnapshot, updateDoc, doc } from "firebase/firestore";
-import { auth, db } from "../firebase/config.js";
-import { C, fmt, fmtDt, PAYMENT_METHODS, WHATSAPP_ADMIN } from "../utils/constants.js";
-import { Toast, Spinner, Modal, StatCard, Card, fieldStyle, BtnPrimary, WaButton, Logo } from "../components/UI.jsx";
+import { auth, db } from "./config.js";
+import { C, fmt, fmtDt, PAYMENT_METHODS, WHATSAPP_ADMIN } from "./constants.js";
+import { Toast, Spinner, Modal, StatCard, Card, fieldStyle, BtnPrimary, WaButton, Logo } from "./UI.jsx";
 
 export default function DriverDashboard({user}) {
   const [orders,   setOrders]   = useState([]);
