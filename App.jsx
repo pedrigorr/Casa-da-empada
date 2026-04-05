@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "./firebase/config.js";
-import { C } from "./utils/constants.js";
+import { auth, db } from "./config.js";
+import { C } from "./constants.js";
 import { Logo, Spinner } from "./UI.jsx";
 import AuthPage from "./AuthPage.jsx";
 import AdminLayout from "./AdminLayout.jsx";
