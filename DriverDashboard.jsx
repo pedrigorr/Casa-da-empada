@@ -41,7 +41,6 @@ export default function DriverDashboard({user}) {
     if(!order) return;
     try {
       const val = parseFloat(recVal) || 0;
-      // AJUSTE 1: Agora gravamos o entregadorId para saber quem fez a entrega
       await updateDoc(doc(db, "pedidos", order.id), {
         status: "entregue",
         receivedValue: val,
@@ -56,10 +55,9 @@ export default function DriverDashboard({user}) {
     }
   }
 
-  // AJUSTE 2: Filtrar estatísticas e histórico para mostrar apenas os ganhos DESTE entregador
   const filtered = orders.filter(o => {
     if (o.status !== "entregue") return false;
-    if (o.entregadorId !== user.uid) return false; // Filtro de individualidade
+    if (o.entregadorId !== user.uid) return false; 
 
     const d = new Date(o.deliveredAt);
     const now = new Date();
@@ -84,7 +82,6 @@ export default function DriverDashboard({user}) {
     <div style={{minHeight:"100vh",background:C.parchment,paddingBottom:100}}>
       {toast && <Toast msg={toast.msg} type={toast.type} />}
       
-      {/* Header */}
       <div style={{background:`linear-gradient(135deg,${C.espresso},${C.brown})`,padding:"24px 20px",borderRadius:"0 0 32px 32px",boxShadow:"0 10px 30px rgba(0,0,0,0.15)"}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:20}}>
           <div>
@@ -121,17 +118,17 @@ export default function DriverDashboard({user}) {
                     <div style={{fontSize:14,color:C.brown,lineHeight:1.4}}>📍 {order.address}</div>
                   </div>
 
-                  <div style={{display:"flex",gap:8,marginBottom:15,flexWrap:\"wrap\"}}>
-                    <div style={{background:C.parchment,padding:\"8px 12px\",borderRadius:10,fontSize:13}}>💰 {fmt(order.total)}</div>
-                    <div style={{background:\"#dcfce7\",color:\"#166534\",padding:\"8px 12px\",borderRadius:10,fontSize:13,fontWeight:700}}>🛵 Taxa: {fmt(order.deliveryFee)}</div>
+                  <div style={{display:"flex",gap:8,marginBottom:15,flexWrap:"wrap"}}>
+                    <div style={{background:C.parchment,padding:"8px 12px",borderRadius:10,fontSize:13}}>💰 {fmt(order.total)}</div>
+                    <div style={{background:"#dcfce7",color:"#166534",padding:"8px 12px",borderRadius:10,fontSize:13,fontWeight:700}}>🛵 Taxa: {fmt(order.deliveryFee)}</div>
                   </div>
 
-                  <div style={{display:\"flex\",gap:10}}>
-                    <WaButton phone={order.customerPhone} label=\"WhatsApp\" style={{flex:1}} />
-                    {order.status === \"em_entrega\" ? (
-                      <button onClick={()=>setConfModal(order)} style={{flex:1.5,background:\"#16a34a\",color:\"#fff\",border:\"none\",borderRadius:12,fontWeight:700,fontSize:14}}>✅ Finalizar</button>
+                  <div style={{display:"flex",gap:10}}>
+                    <WaButton phone={order.customerPhone} label="WhatsApp" style={{flex:1}} />
+                    {order.status === "em_entrega" ? (
+                      <button onClick={()=>setConfModal(order)} style={{flex:1.5,background:"#16a34a",color:"#fff",border:"none",borderRadius:12,fontWeight:700,fontSize:14}}>✅ Finalizar</button>
                     ) : (
-                      <button onClick={()=>updateDoc(doc(db,\"pedidos\",order.id),{status:\"em_entrega\"})} style={{flex:1.5,background:C.espresso,color:\"#fff\",border:\"none\",borderRadius:12,fontWeight:700,fontSize:14}}>🚀 Iniciar Entrega</button>
+                      <button onClick={()=>updateDoc(doc(db,"pedidos",order.id),{status:"em_entrega"})} style={{flex:1.5,background:C.espresso,color:"#fff",border:"none",borderRadius:12,fontWeight:700,fontSize:14}}>🚀 Iniciar Entrega</button>
                     )}
                   </div>
                 </Card>
@@ -140,31 +137,31 @@ export default function DriverDashboard({user}) {
           </div>
         ) : (
           <div>
-            <div style={{display:\"flex\",gap:8,marginBottom:20}}>
-              <button onClick={()=>setPeriod(\"hoje\")} style={{flex:1,padding:10,borderRadius:10,border:\"none\",background:period===\"hoje\"?C.terracotta:C.warmWhite,color:period===\"hoje\"?\"#fff\":C.brown,fontSize:13,fontWeight:700}}>Hoje</button>
-              <button onClick={()=>setPeriod(\"mes\")} style={{flex:1,padding:10,borderRadius:10,border:\"none\",background:period===\"mes\"?C.terracotta:C.warmWhite,color:period===\"mes\"?\"#fff\":C.brown,fontSize:13,fontWeight:700}}>Este Mês</button>
-              <button onClick={()=>setPeriod(\"tudo\")} style={{flex:1,padding:10,borderRadius:10,border:\"none\",background:period===\"tudo\"?C.terracotta:C.warmWhite,color:period===\"tudo\"?\"#fff\":C.brown,fontSize:13,fontWeight:700}}>Total</button>
+            <div style={{display:"flex",gap:8,marginBottom:20}}>
+              <button onClick={()=>setPeriod("hoje")} style={{flex:1,padding:10,borderRadius:10,border:"none",background:period==="hoje"?C.terracotta:C.warmWhite,color:period==="hoje"?"#fff":C.brown,fontSize:13,fontWeight:700}}>Hoje</button>
+              <button onClick={()=>setPeriod("mes")} style={{flex:1,padding:10,borderRadius:10,border:"none",background:period==="mes"?C.terracotta:C.warmWhite,color:period==="mes"?"#fff":C.brown,fontSize:13,fontWeight:700}}>Este Mês</button>
+              <button onClick={()=>setPeriod("tudo")} style={{flex:1,padding:10,borderRadius:10,border:"none",background:period==="tudo"?C.terracotta:C.warmWhite,color:period==="tudo"?"#fff":C.brown,fontSize:13,fontWeight:700}}>Total</button>
             </div>
 
-            <div style={{display:\"grid\",gridTemplateColumns:\"1fr 1fr\",gap:12,marginBottom:20}}>
-              <StatCard label=\"Entregas\" value={stats.total} color={C.espresso} />
-              <StatCard label=\"Sua Taxa\" value={fmt(stats.earnings)} color=\"#16a34a\" />
-              <StatCard label=\"Faturado\" value={fmt(stats.revenue)} color={C.terracotta} isFull />
+            <div style={{display:"flex",gap:12,marginBottom:20}}>
+              <StatCard label="Entregas" value={stats.total} color={C.espresso} />
+              <StatCard label="Sua Taxa" value={fmt(stats.earnings)} color="#16a34a" />
+              <StatCard label="Faturado" value={fmt(stats.revenue)} color={C.terracotta} isFull />
             </div>
 
-            <div style={{fontSize:16,fontWeight:800,color:C.espresso,marginBottom:15,fontFamily:\"'Playfair Display',serif\"}}>Histórico de Entregas</div>
-            <div style={{display:\"flex\",flexDirection:\"column\",gap:12}}>
+            <div style={{fontSize:16,fontWeight:800,color:C.espresso,marginBottom:15,fontFamily:"'Playfair Display',serif"}}>Histórico de Entregas</div>
+            <div style={{display:"flex",flexDirection:"column",gap:12}}>
               {filtered.length === 0 ? (
-                <div style={{textAlign:\"center\",padding:30,color:C.brown,opacity:0.5}}>Nenhuma entrega neste período.</div>
+                <div style={{textAlign:"center",padding:30,color:C.brown,opacity:0.5}}>Nenhuma entrega neste período.</div>
               ) : (
                 filtered.sort((a,b)=>new Date(b.deliveredAt)-new Date(a.deliveredAt)).map(o => (
-                  <Card key={o.id} style={{padding:15,display:\"flex\",justify:\"space-between\",alignItems:\"center\"}}>
+                  <Card key={o.id} style={{padding:15,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
                     <div>
                       <div style={{fontSize:14,fontWeight:800,color:C.espresso}}>{o.customerName}</div>
                       <div style={{fontSize:11,color:C.brown}}>{fmtDt(o.deliveredAt)}</div>
                     </div>
-                    <div style={{textAlign:\"right\"}}>
-                      <div style={{fontSize:14,fontWeight:800,color:\"#16a34a\"}}>+{fmt(o.deliveryFee)}</div>
+                    <div style={{textAlign:"right"}}>
+                      <div style={{fontSize:14,fontWeight:800,color:"#16a34a"}}>+{fmt(o.deliveryFee)}</div>
                       <div style={{fontSize:10,color:C.brown}}>{o.paymentMethod}</div>
                     </div>
                   </Card>
@@ -176,7 +173,27 @@ export default function DriverDashboard({user}) {
       </div>
 
       {confModal && (
-        <Modal onClose={()=>setConfModal(null)} title=\"Confirmar Entrega\">
+        <Modal onClose={()=>setConfModal(null)} title="Confirmar Entrega">
+          <div style={{marginBottom:20}}>
+            <label style={{display:"block",fontSize:13,fontWeight:700,color:C.brown,marginBottom:8}}>VALOR RECEBIDO (R$)</label>
+            <input type="number" value={recVal} onChange={e=>setRecVal(e.target.value)} placeholder="0,00" style={fieldStyle({fontSize:20,textAlign:"center"})} />
+            <p style={{fontSize:12,color:C.brown,marginTop:8,textAlign:"center"}}>Informe o valor total pago pelo cliente.</p>
+          </div>
+          <div style={{display:"flex",gap:12}}>
+            <button onClick={()=>{setConfModal(null);setRecVal("");}} style={{flex:1,padding:"13px",borderRadius:12,border:`1.5px solid ${C.parchment}`,background:"transparent",color:C.espresso,fontFamily:"Georgia,serif",fontSize:14,cursor:"pointer"}}>Cancelar</button>
+            <button onClick={()=>handleDelivered(confModal)} style={{flex:1,padding:"13px",borderRadius:12,border:"none",background:"#16a34a",color:"#fff",fontFamily:"Georgia,serif",fontSize:14,fontWeight:700,cursor:"pointer"}}>✅ Confirmar</button>
+          </div>
+        </Modal>
+      )}
+
+      <div style={{position:"fixed",bottom:24,right:16,display:"flex",flexDirection:"column",gap:10,zIndex:90}}>
+        <a href={`https://wa.me/${WHATSAPP_ADMIN}`} target="_blank" rel="noreferrer"
+          style={{width:50,height:50,borderRadius:"50%",background:"#2563eb",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,boxShadow:"0 4px 16px rgba(37,99,235,.4)",textDecoration:"none"}}>👨‍💼</a>
+      </div>
+    </div>
+  );
+}
+ConfModal(null)} title=\"Confirmar Entrega\">
           <div style={{marginBottom:20}}>
             <label style={{display:\"block\",fontSize:13,fontWeight:700,color:C.brown,marginBottom:8}}>VALOR RECEBIDO (R$)</label>
             <input type=\"number\" value={recVal} onChange={e=>setRecVal(e.target.value)} placeholder=\"0,00\" style={fieldStyle({fontSize:20,textAlign:\"center\"})} />
