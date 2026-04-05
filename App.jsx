@@ -4,9 +4,9 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "./firebase/config.js";
 import { C } from "./utils/constants.js";
 import { Logo, Spinner } from "./components/UI.jsx";
-import AuthPage from "./pages/AuthPage.jsx";
-import AdminLayout from "./pages/AdminLayout.jsx";
-import DriverDashboard from "./pages/DriverDashboard.jsx";
+import AuthPage from "./AuthPage.jsx";
+import AdminLayout from "./AdminLayout.jsx";
+import DriverDashboard from "./DriverDashboard.jsx";
 
 export default function App() {
   const [user,    setUser]    = useState(null);
