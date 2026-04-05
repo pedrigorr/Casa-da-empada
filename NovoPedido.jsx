@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from "react";
-import { C, MENU, ALL_ITEMS, PAYMENT_METHODS, CIDADES, fmt } from "../utils/constants.js";
-import { fieldStyle, Lbl, BtnPrimary } from "../components/UI.jsx";
+import { C, MENU, ALL_ITEMS, PAYMENT_METHODS, CIDADES, fmt } from "./constants.js";
+import { fieldStyle, Lbl, BtnPrimary } from "./UI.jsx";
 
 function ClienteInput({value, onChange, clients}) {
   const [open,setOpen]=useState(false);
