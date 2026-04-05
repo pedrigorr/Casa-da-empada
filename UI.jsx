@@ -1,4 +1,4 @@
-import { C, fmt } from "../utils/constants.js";
+import { C, fmt } from "./constants.js";
 
 export function Toast({msg, type="success"}) {
   return (
